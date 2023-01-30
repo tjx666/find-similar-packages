@@ -3,8 +3,12 @@
     "version": "0.0.1",
     "license": "MIT",
     "description": "find functional similar npm packages",
-    "bin": "bin/index.mjs",
     "type": "module",
+    "files": [
+        "bin",
+        "index.js"
+    ],
+    "bin": "bin/index.mjs",
     "engines": {
         "node": "^18"
     },
