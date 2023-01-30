@@ -9,6 +9,9 @@
         "index.js"
     ],
     "bin": "bin/index.mjs",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    },
     "engines": {
         "node": "^18"
     },
