@@ -24,8 +24,8 @@ async function getProjectDeps(projectRoot: string) {
     return [...deps];
 }
 
-function isChildSet(childSet: Set<string>, parentSet: Set<string>) {
-    for (const value of childSet) {
+function isSubSet(subSet: Set<string>, parentSet: Set<string>) {
+    for (const value of subSet) {
         if (!parentSet.has(value)) return false;
     }
     return true;
@@ -53,19 +53,15 @@ async function main() {
         ),
     );
 
-    const similarPackageSets: Array<Set<string>> = [];
-    for (const similarPackageSet of [...new Set(depToSetMap.values())]) {
-        if (similarPackageSet) {
-            similarPackageSets.push(similarPackageSet);
-        }
-    }
-
+    const similarPackageSets: Array<Set<string>> = [...depToSetMap.values()].filter(
+        Boolean,
+    ) as Array<Set<string>>;
     const resultSets = new Set([...similarPackageSets]);
     for (const similarPackageSet1 of similarPackageSets) {
         for (const similarPackageSet2 of similarPackageSets) {
             if (
                 similarPackageSet2 !== similarPackageSet1 &&
-                isChildSet(similarPackageSet2, similarPackageSet1)
+                isSubSet(similarPackageSet2, similarPackageSet1)
             ) {
                 if (similarPackageSet2.size === similarPackageSet1.size) {
                     if (resultSets.has(similarPackageSet1) && resultSets.has(similarPackageSet2)) {
