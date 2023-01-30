@@ -24,6 +24,13 @@ async function getProjectDeps(projectRoot: string) {
     return [...deps];
 }
 
+function isChildSet(childSet: Set<string>, parentSet: Set<string>) {
+    for (const value of childSet) {
+        if (!parentSet.has(value)) return false;
+    }
+    return true;
+}
+
 async function main() {
     const projectRoot = process.argv[2] ?? process.cwd();
     const deps = await getProjectDeps(projectRoot);
@@ -41,57 +48,38 @@ async function main() {
                 const localSimilarPackages = similarPackages.filter((pkg) => depSet.has(pkg));
                 if (localSimilarPackages.length === 0) return;
 
-                let existedSet = depToSetMap.get(dep);
-                if (existedSet === undefined) {
-                    const similarPackagesOwnSets: Array<Set<string>> = [];
-                    const hasOwnSetSimilarPackages: string[] = [];
-                    for (const localSimilarPackage of localSimilarPackages) {
-                        const similarPackagesOwnSet = depToSetMap.get(localSimilarPackage);
-                        if (similarPackagesOwnSet !== undefined) {
-                            hasOwnSetSimilarPackages.push(localSimilarPackage);
-                            similarPackagesOwnSets.push(similarPackagesOwnSet!);
-                        }
-                    }
-                    if (similarPackagesOwnSets.length > 0) {
-                        if (similarPackagesOwnSets.length === 1) {
-                            existedSet = similarPackagesOwnSets[0];
-                            depToSetMap.set(dep, existedSet);
-                            existedSet.add(dep);
-                        }
-
-                        if (similarPackagesOwnSets.length === 2) {
-                            existedSet = new Set(
-                                similarPackagesOwnSets.map((set) => [...set]).flat(),
-                            );
-                            for (const pkg of [dep, ...hasOwnSetSimilarPackages]) {
-                                depToSetMap.set(pkg, existedSet);
-                            }
-                        }
-
-                        for (const pkg of localSimilarPackages) {
-                            existedSet!.add(pkg);
-                        }
-
-                        return;
-                    }
-
-                    const similarPackageSet = new Set([dep]);
-                    depToSetMap.set(dep, similarPackageSet);
-                    for (const pkg of localSimilarPackages) {
-                        similarPackageSet.add(pkg);
-                        depToSetMap.set(pkg, similarPackageSet);
-                    }
-                } else {
-                    localSimilarPackages.forEach((p) => existedSet!.add(p));
-                }
+                depToSetMap.set(dep, new Set([dep, ...localSimilarPackages]));
             }),
         ),
     );
 
+    const similarPackageSets: Array<Set<string>> = [];
     for (const similarPackageSet of [...new Set(depToSetMap.values())]) {
         if (similarPackageSet) {
-            console.log([...similarPackageSet].join('\t'));
+            similarPackageSets.push(similarPackageSet);
         }
+    }
+
+    const resultSets = new Set([...similarPackageSets]);
+    for (const similarPackageSet1 of similarPackageSets) {
+        for (const similarPackageSet2 of similarPackageSets) {
+            if (
+                similarPackageSet2 !== similarPackageSet1 &&
+                isChildSet(similarPackageSet2, similarPackageSet1)
+            ) {
+                if (similarPackageSet2.size === similarPackageSet1.size) {
+                    if (resultSets.has(similarPackageSet1) && resultSets.has(similarPackageSet2)) {
+                        resultSets.delete(similarPackageSet2);
+                    }
+                } else {
+                    resultSets.delete(similarPackageSet2);
+                }
+            }
+        }
+    }
+
+    for (const similarPackageSet of resultSets) {
+        console.log([...similarPackageSet].sort().join('\t'));
     }
 }
 
