@@ -1,5 +1,7 @@
 # find-similar-packages
 
+![Version](https://img.shields.io/npm/v/@yutengjing/find-similar-packages)
+
 ## Install
 
 ```sh
@@ -11,6 +13,9 @@ pnpm install -g @yutengjing/find-similar-packages
 ```sh
 find-similar-packages /path/to/pnpm/monorepo/project/root
 ```
+
+> **Note**
+> For Chinese users, you need to set proxy
 
 example output:
 
