@@ -18,6 +18,7 @@
         "node": "^18"
     },
     "scripts": {
+        "prepublishOnly": "pnpm build",
         "build": "tsc -p tsconfig.json",
         "release": "bumpp --commit --push --tag && pnpm publish --access public"
     },
