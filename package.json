@@ -1,5 +1,5 @@
 {
-    "name": "find-similar-packages",
+    "name": "@yutengjing/find-similar-packages",
     "version": "0.0.1",
     "license": "MIT",
     "description": "find functional similar npm packages",
@@ -8,7 +8,9 @@
         "bin",
         "index.js"
     ],
-    "bin": "bin/index.mjs",
+    "bin": {
+        "find-similar-packages": "bin/index.mjs"
+    },
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"
     },

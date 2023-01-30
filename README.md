@@ -3,7 +3,7 @@
 ## Install
 
 ```sh
-pnpm install -g find-similar-packages
+pnpm install -g @yutengjing/find-similar-packages
 ```
 
 ## Usage
