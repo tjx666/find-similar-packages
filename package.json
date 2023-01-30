@@ -1,17 +1,42 @@
 {
     "name": "find-similar-packages",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "version": "0.0.1",
+    "license": "MIT",
+    "description": "find functional similar npm packages",
+    "bin": "bin/index.mjs",
     "type": "module",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+    "engines": {
+        "node": "^18"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "release": "bumpp --commit --push --tag && pnpm publish --access public"
+    },
+    "keywords": [
+        "cli",
+        "same",
+        "similar",
+        "repeat",
+        "duplicate",
+        "package"
+    ],
+    "author": {
+        "name": "YuTengjing",
+        "url": "https://github.com/tjx666",
+        "email": "ytj2713151713@gmail.com"
+    },
+    "homepage": "https://github.com/tjx666/find-similar-packages/blob/master/README.md",
+    "bugs": {
+        "url": "https://github.com/tjx666/find-similar-packages/issues",
+        "email": "ytj2713151713@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tjx666/find-similar-packages"
+    },
     "devDependencies": {
-        "@types/node": "^18.11.18"
+        "@types/node": "^18.11.18",
+        "bumpp": "^8.2.1"
     },
     "dependencies": {
         "@pnpm/find-workspace-packages": "^5.0.16",
