@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { findWorkspacePackagesNoCheck } from '@pnpm/find-workspace-packages';
+import axios from 'axios';
 import pLimit from 'p-limit';
 
 async function getSimilarPackages(packageName: string) {
@@ -56,7 +56,7 @@ async function main() {
     const similarPackageSets: Array<Set<string>> = [...depToSetMap.values()].filter(
         Boolean,
     ) as Array<Set<string>>;
-    const resultSets = new Set([...similarPackageSets]);
+    const resultSets = new Set(similarPackageSets);
     for (const similarPackageSet1 of similarPackageSets) {
         for (const similarPackageSet2 of similarPackageSets) {
             if (
