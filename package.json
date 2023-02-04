@@ -53,6 +53,7 @@
         "@pnpm/find-workspace-packages": "^5.0.16",
         "@pnpm/logger": "^5.0.0",
         "axios": "^1.2.6",
+        "commander": "^10.0.0",
         "p-limit": "^4.0.0"
     },
     "devDependencies": {
