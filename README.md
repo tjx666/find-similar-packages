@@ -2,6 +2,8 @@
 
 ![Version](https://img.shields.io/npm/v/@yutengjing/find-similar-packages)
 
+find function similar packages in pnpm monorepo project
+
 ## Install
 
 ```sh
@@ -11,7 +13,13 @@ pnpm install -g @yutengjing/find-similar-packages
 ## Usage
 
 ```sh
-find-similar-packages /path/to/pnpm/monorepo/project/root
+Usage: find-similar-packages [options] /path/to/pnpm/monorepo/projectRoot
+
+Options:
+  -i, --ignore <regexp>       a regexp to specify which packages should be ignore
+  -c, --concurrency <number>  concurrency count to check packages (default: "50")
+  -V, --version               output the version number
+  -h, --help                  display help for command
 ```
 
 > **Note**
