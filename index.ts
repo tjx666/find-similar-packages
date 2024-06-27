@@ -5,7 +5,7 @@ import axios from 'axios';
 import { program } from 'commander';
 import pLimit from 'p-limit';
 
-import packageJSON from './package.json';
+import packageJSON from './package.json' assert { type: 'json' };
 
 async function getSimilarPackages(packageName: string) {
     const searchUrl =
